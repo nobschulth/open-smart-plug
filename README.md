@@ -8,8 +8,8 @@ This is a software for a smart plug to replace something like Tuya. It was speci
 
 ### Flashing
 
-For the hardware side of flashing, see [LibreTiny](https://docs.libretiny.eu/docs/platform/beken-72xx/#flashing) (Use an USB to UART adapter, solder the RX/TX pins of it to your chip). \\
-To build and flash, install [PlatformIO](https://platformio.org/) and [ltchiptool](https://github.com/libretiny-eu/ltchiptool). Run the following commands from the project root while the chip is connected:\\
+For the hardware side of flashing, see [LibreTiny](https://docs.libretiny.eu/docs/platform/beken-72xx/#flashing) (Use an USB to UART adapter, solder the RX/TX pins of it to your chip).  
+To build and flash, install [PlatformIO](https://platformio.org/) and [ltchiptool](https://github.com/libretiny-eu/ltchiptool). Run the following commands from the project root while the chip is connected:  
 Backup the old firmware (replace BK7231N with your chips family, see (here)[https://docs.libretiny.eu/docs/status/supported/#board-list]):
 ```
 ltchiptool flash read -d /dev/ttyACM0 BK7231N backup.bin
