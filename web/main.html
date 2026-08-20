@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>INSERT NAME</title>
+<style>
+body {
+    margin: 0;
+    background: #111;
+    background: #1A1A1A;
+    background: linear-gradient(180deg,rgba(26, 26, 26, 1) 0%, rgba(17, 17, 17, 1) 100%);
+    color: white;
+    font-family: sans-serif;
+    height: 100vh;
+}
+h1 {
+    background: linear-gradient(45deg, #99c1f1, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 50px;
+    font-weight: 900;
+    font-family: Arial, sans-serif;
+    background-clip: text;
+}
+p {
+    font-size: 20px;
+    font-weight: 500;
+    font-family: Arial, sans-serif;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+input {
+    color: white;
+    background: none;
+    border: none;
+    font-size: 20px;
+    font-weight: 500;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 10px;
+}
+
+input:focus {
+    outline: none;
+    text-decoration-line: underline;
+}
+
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pbutton {
+    margin: 50px;
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    background: #1a1a1a;
+    background: linear-gradient(180deg,rgba(26, 26, 26, 1) 0%, rgba(59, 59, 64, 1) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    box-shadow: inset 0px -30px 27px 2px rgba(0, 0, 0, 0.3);
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+.pbutton::after {
+    position: absolute;
+    inset: 0;
+    content: "";
+    width: 250px;
+    height: 250px;
+    z-index: -1;
+    background: #1a1a1a;
+    background: linear-gradient(0deg,rgba(26, 26, 26, 1) 0%, rgba(59, 59, 64, 1) 100%);
+    border-radius: 50%;
+    top: -25px;
+    left: -25px;
+    transition:
+        filter 0.3s ease;
+
+    filter:
+        drop-shadow(0 0 4px currentColor)
+        drop-shadow(0 0 10px currentColor)
+}
+.pbutton.off::after{
+    filter:
+        drop-shadow(0 0 4px currentColor)
+        drop-shadow(0 0 15px currentColor)
+        drop-shadow(0 0 30px currentColor);
+}
+
+.button-wrapper {
+    position: relative;
+}
+.power-icon{
+    width: 80px;
+    height: 80px;
+    color: #5880D1;
+    transition:
+        color 0.3s ease,
+        filter 0.3s ease;
+    filter:
+        drop-shadow(0 0 4px currentColor)
+        drop-shadow(0 0 10px currentColor)
+        drop-shadow(0 0 20px currentColor);
+}
+.power-icon.off {
+    color: #7D7D7D;
+    filter:
+        drop-shadow(0 0 4px currentColor)
+        drop-shadow(0 0 10px currentColor)
+}
+
+.sub {
+    opacity: 0;
+    visibility: hidden;
+    transition-duration: 1s;
+    transition-property: opacity;
+    cursor: pointer;
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1>Smart Plug</h1>
+        <form action="/config" method="POST">
+            <input name="ssid" maxlength=63 id="ssid">
+            <input type="password" name="pass" maxlength=63 minlength=8 id="pass">
+            <input type="submit" value="Save and restart" class="sub" id="sub">
+        </form>
+        <div class="button-wrapper">
+            <button class="pbutton off" id="powerButton">
+            <div class="power-icon off" id="powerIcon">
+                <svg viewBox="0 0 24 24" fill="none"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M12 2C12.5523 2 13 2.44772 13 3L13 11C13 11.5523 12.5523 12 12 12C11.4477 12 11 11.5523 11 11L11 3C11 2.44772 11.4477 2 12 2ZM7.10815 6.29277C7.49874 6.68323 7.49885 7.3164 7.10839 7.70699C5.80862 9.0072 5 10.821 5 12.8333C5 16.8109 8.15335 20 12 20C15.8467 20 19 16.8109 19 12.8333C19 10.821 18.1914 9.0072 16.8916 7.70699C16.5012 7.3164 16.5013 6.68323 16.8918 6.29277C17.2824 5.90232 18.1914 5.90242 18.3061 6.29301C19.9698 7.95734 21 10.2754 21 12.8333C21 17.8764 16.9899 22 12 22C7.0101 22 3 17.8764 3 12.8333C3 10.2754 4.03017 7.95734 5.69394 6.29301C6.0844 5.90242 6.71756 5.90232 7.10815 6.29277Z"
+                          fill="currentColor"/>
+                </svg>
+            </div>
+            </button>
+        </div>
+    </div>
+
+<script>
+    const ssidName = "STECKDOSE";
+    const passName = "PASSWORD";
+
+    const button = document.getElementById("powerButton");
+    const icon = document.getElementById("powerIcon");
+    const ssid = document.getElementById("ssid");
+    const pass = document.getElementById("pass");
+    const submButton = document.getElementById("sub");
+
+    let newSsidName = ssidName;
+    let newPassName = passName;
+
+    button.addEventListener("click", async () => {
+        const newState = button.classList.contains("off");
+        button.classList.toggle("off", !newState);
+        icon.classList.toggle("off", !newState);
+
+        try {
+            const response = await fetch("/relay?state=" + (newState ? "1" : "0"));
+            if (!response.ok) {
+                throw new Error("Server error");
+            }
+        } catch (error) {
+            // Server failed, revert the animation/state
+            alert("Server did not respond");
+            button.classList.toggle("off", newState);
+            icon.classList.toggle("off", newState);
+            console.error(error);
+        }
+    });
+
+    ssid.value = ssidName;
+    pass.value = passName;
+    sub.style.opacity = 0;
+
+    ssid.addEventListener("input", () => {
+        newSsidName = ssid.value;
+        updateSub();
+    });
+    pass.addEventListener("input", () => {
+        newPassName = pass.value;
+        updateSub();
+    });
+
+    pass.addEventListener("focus", () => {
+        pass.type = "text";
+    });
+    pass.addEventListener("blur", () => {
+        pass.type = "password";
+    });
+
+    function updateSub() {
+        if ((newSsidName !== ssidName || newPassName !== passName) && pass.value.length >= 8 && ssid.value.length >= 1) {
+            sub.style.visibility = "visible";
+            sub.style.opacity = 1;
+        } else {
+            sub.style.visibility = "hidden";
+            sub.style.opacity = 0;
+        }
+    }
+
+    async function updateRelayState() {
+    try {
+        const response = await fetch("/state");
+        const state = await response.text();
+
+        const isOn = state === "1";
+
+        document
+            .querySelector(".pbutton")
+            .classList.toggle("on", isOn);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+setInterval(updateRelayState, 500);
+</script>
+</body>
+</html>
